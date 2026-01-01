@@ -9,11 +9,6 @@ const LeftNavbar = () => {
       .then((data) => setCategories(data.data.news_category));
   }, []);
 
-  //   {
-  //     "category_id": "01",
-  //     "category_name": "Breaking News"
-  //   }
-
   return (
     <div>
       <h2 className="font-semibold mb-3">All Caterogy ({categories.length})</h2>
@@ -21,7 +16,7 @@ const LeftNavbar = () => {
         {categories.map((category) => (
           <NavLink
             to={`/category/${category.category_id}`}
-            className="btn bg-base-100 border-none"
+            className="btn bg-base-100 border-none text-sm md:text-base"
             key={category.category_id}
           >
             {category.category_name}

@@ -1,6 +1,14 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import HomeLayout from "../layouts/HomeLayout";
 import CategoryNews from "../pages/CategoryNews";
+import AuthLayout from "../layouts/AuthLayout";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import NewsDetails from "../pages/NewsDetails";
+import PrivateRoute from "./PrivateRoute";
+import Career from "../pages/Career";
+import About from "../pages/About";
+import Error from "../components/Error";
 
 const router = createBrowserRouter([
   {
@@ -22,16 +30,42 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/news",
-    element: <h1>News Layout</h1>,
+    path: "/news/:id",
+    element: (
+      <PrivateRoute>
+        <NewsDetails></NewsDetails>
+      </PrivateRoute>
+    ),
+    loader: ({ params }) =>
+      fetch(`https://openapi.programming-hero.com/api/news/${params.id}`).then(
+        (res) => res.json()
+      ),
   },
   {
     path: "auth",
-    element: <h1>Login</h1>,
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/signup",
+        element: <SignUp></SignUp>,
+      },
+    ],
+  },
+  {
+    path: "/career",
+    element: <Career />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
   {
     path: "*",
-    element: <h1>Error</h1>,
+    element: <Error />,
   },
 ]);
 
